@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>诗集</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #faf8f4;
+    --text: #2c2824;
+    --date-color: #9a918a;
+    --divider: #d6cec6;
+  }
+
+  html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Serif SC', 'Songti SC', serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    scroll-snap-align: start;
+    position: relative;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+  }
+
+  .page:nth-child(1)  { animation-delay: 0s; }
+  .page:nth-child(2)  { animation-delay: .05s; }
+  .page:nth-child(3)  { animation-delay: .1s; }
+  .page:nth-child(4)  { animation-delay: .15s; }
+  .page:nth-child(5)  { animation-delay: .2s; }
+  .page:nth-child(6)  { animation-delay: .25s; }
+  .page:nth-child(7)  { animation-delay: .3s; }
+  .page:nth-child(8)  { animation-delay: .35s; }
+  .page:nth-child(9)  { animation-delay: .4s; }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .page::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 1px;
+    background: var(--divider);
+  }
+
+  .page:last-child::after { display: none; }
+
+  .title {
+    font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.6rem;
+    line-height: 1.6;
+  }
+
+  .date {
+    font-size: 0.82rem;
+    color: var(--date-color);
+    font-style: italic;
+    letter-spacing: 0.08em;
+    margin-bottom: 2.4rem;
+    font-weight: 300;
+  }
+
+  .body {
+    font-size: 1.05rem;
+    line-height: 2.2;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    max-width: 32em;
+  }
+
+  .body .stanza {
+    margin-bottom: 1.6em;
+  }
+
+  .body .stanza:last-child {
+    margin-bottom: 0;
+  }
+
+  @media print {
+    .page {
+      page-break-after: always;
+      min-height: 100vh;
+      opacity: 1;
+      animation: none;
+    }
+    html { scroll-snap-type: none; }
+  }
+
+  @media (max-width: 600px) {
+    .title { font-size: 1.4rem; }
+    .body { font-size: 0.98rem; }
+    .page { padding: 3rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="title">夜晚是一剂失效的安眠药</div>
+  <div class="date">2025.6.27</div>
+  <div class="body">
+    <div class="stanza">
+      夜晚是一剂失效的安眠药<br>
+      吞下以后<br>
+      眼前浮现出的是<br>
+      房间里昏黄的残影和她去了远方的<br>
+      潮汐的声音
+    </div>
+    <div class="stanza">
+      窗外<br>
+      我看见云层中呕出的圆月<br>
+      还有自己倒映在玻璃上的脸<br>
+      憔悴、冷漠<br>
+      只是一道无法落泪的光
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="title">冷秋</div>
+  <div class="date">2021.10.9</div>
+  <div class="body">
+    <div class="stanza">
+      天上下起小雨<br>
+      我的不鲜红的痛苦<br>
+      都淌进街上地砖的缝隙<br>
+      等太阳一晒<br>
+      蒸发成透明的虚无
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="title">远征</div>
+  <div class="date">2020.10.22</div>
+  <div class="body">
+    <div class="stanza">
+      水管漏了<br>
+      睡觉时有三只蚊子<br>
+      天也冷<br>
+      在下雪<br>
+      明天他们要动工<br>
+      我要到哪里做梦
+    </div>
+    <div class="stanza">
+      远征<br>
+      去往还未被人踏足的他乡<br>
+      故土是焦虑的产物<br>
+      而我是一炉离奇的妒火<br>
+      只会燃烧<br>
+      从不哀愁
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="title">麻药、痛苦与火</div>
+  <div class="date">2020.9.28</div>
+  <div class="body">
+    <div class="stanza">
+      我的麻药已过<br>
+      痛苦如蛇<br>
+      痴迷如火
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="title">远方</div>
+  <div class="date">2019.7.24</div>
+  <div class="body">
+    <div class="stanza">
+      我们的远方没有计划<br>
+      日子越来越琐碎<br>
+      揉进南方湿热的盛夏<br>
+      只有在祖先的记忆中找寻<br>
+      群山之上回响的<br>
+      遥远的悠长的牧歌
+    </div>
+    <div class="stanza">
+      故事曾经对未来寄予厚望<br>
+      而时光戏耍了一半怀揣大梦的人<br>
+      另一半已在天堂
+    </div>
+    <div class="stanza">
+      虚无也变得逼仄和扁平<br>
+      似乎无关紧要<br>
+      什么东西还残留着重量<br>
+      能继续留在母亲身旁
+    </div>
+    <div class="stanza">
+      想起跨越山海的奇迹之桥<br>
+      在上面眺望<br>
+      水既非镜子也非死亡
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="title">方形亮光</div>
+  <div class="date">2019.7.5</div>
+  <div class="body">
+    <div class="stanza">
+      方形亮光<br>
+      飞蛾扑火的眼睛<br>
+      深夜呓语
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="title">明天</div>
+  <div class="date">2019.2.25</div>
+  <div class="body">
+    <div class="stanza">
+      明天，明天将是<br>
+      一场葬礼<br>
+      远远地，有人望<br>
+      高高的白帆<br>
+      竟炊烟袅袅<br>
+      雨滴静静地流过<br>
+      死亡
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="title">无题</div>
+  <div class="date">2018.12.1</div>
+  <div class="body">
+    <div class="stanza">
+      嘎吱、吸溜、咔嚓、咕噜<br>
+      交响般演出<br>
+      神最丑陋的用餐时刻
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="title">彼岸</div>
+  <div class="date">2018.11.1</div>
+  <div class="body">
+    <div class="stanza">
+      彼岸也要与尘世一样<br>
+      自杀的看不起寿终正寝的<br>
+      农夫看不起学者<br>
+      说拉丁文的看不起说英语的
+    </div>
+    <div class="stanza">
+      本来谁也不为生存打算了<br>
+      但是没了这些<br>
+      怎么打发这样长的寂静啊
+    </div>
+    <div class="stanza">
+      现在很热闹<br>
+      人人都在争吵<br>
+      现世的艺术家们<br>
+      为何不将之好好刻画<br>
+      看看这般的世界<br>
+      是否如你所愿<br>
+      啊，是否如你所愿！
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
