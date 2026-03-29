@@ -10,7 +10,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #1C1917;
+    --bg: #2a2213;
     --text: #E0D8D0;
     --date: #7A7168;
     --divider: #332E2A;
@@ -19,7 +19,7 @@
 }
 
 :root[data-theme="dark"] {
-  --bg: #1C1917;
+  --bg: #2a2213;
   --text: #E0D8D0;
   --date: #7A7168;
   --divider: #332E2A;
