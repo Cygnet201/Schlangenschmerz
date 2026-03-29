@@ -187,6 +187,104 @@ body {
   color: var(--text);
 }
 
+/* ===== Feedback ===== */
+
+.feedback-section {
+  border-top: 1px solid var(--divider);
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  text-align: center;
+}
+
+.feedback-section h3 {
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-weight: normal;
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  color: var(--date);
+  margin-bottom: 1.2rem;
+}
+
+.rating-group {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+  direction: rtl;
+}
+
+.rating-group input { display: none; }
+
+.rating-group label {
+  font-size: 1.6rem;
+  color: var(--divider);
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.rating-group label::before { content: '★'; }
+
+.rating-group input:checked ~ label,
+.rating-group input:checked + label {
+  color: var(--accent);
+}
+
+.rating-group label:hover,
+.rating-group label:hover ~ label {
+  color: var(--accent);
+}
+
+.feedback-textarea {
+  width: 100%;
+  max-width: 420px;
+  min-height: 80px;
+  padding: 0.8rem;
+  margin: 0 auto 1rem;
+  display: block;
+  border: 1px solid var(--divider);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text);
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.feedback-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.feedback-textarea::placeholder {
+  color: var(--date);
+}
+
+.feedback-submit {
+  background: transparent;
+  color: var(--date);
+  border: 1px solid var(--divider);
+  border-radius: 4px;
+  padding: 0.5rem 2rem;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.feedback-submit:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.feedback-msg {
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin-top: 0.8rem;
+  display: none;
+}
+
 /* ===== Responsive ===== */
 
 @media (max-width: 600px) {

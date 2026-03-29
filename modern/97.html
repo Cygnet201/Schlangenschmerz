@@ -24,11 +24,48 @@
         死亡
       </div>
     </div>
+    <div class="feedback-section">
+      <h3>留下你的评价</h3>
+      <form id="feedbackForm" onsubmit="return submitFeedback(event)">
+        <input type="hidden" name="entry.133248077" value="明天，明天将是">
+        <div class="rating-group">
+          <input type="radio" name="entry.1288177946" id="star5" value="5"><label for="star5"></label>
+          <input type="radio" name="entry.1288177946" id="star4" value="4"><label for="star4"></label>
+          <input type="radio" name="entry.1288177946" id="star3" value="3" checked><label for="star3"></label>
+          <input type="radio" name="entry.1288177946" id="star2" value="2"><label for="star2"></label>
+          <input type="radio" name="entry.1288177946" id="star1" value="1"><label for="star1"></label>
+        </div>
+        <textarea class="feedback-textarea" name="entry.769828955" placeholder="有什么想说的？（选填）"></textarea>
+        <button type="submit" class="feedback-submit">提交</button>
+      </form>
+      <div class="feedback-msg" id="feedbackMsg">感谢你的评价！</div>
+      <iframe name="gform-iframe" style="display:none;"></iframe>
+    </div>
     <nav class="poem-nav">
       <a href="96.html">← 上一首</a>
       <a href="../index.html">目录</a>
       <a href="98.html">下一首 →</a>
     </nav>
   </div>
+  <script>
+  function submitFeedback(e) {
+    e.preventDefault();
+    var form = document.getElementById('feedbackForm');
+    var data = new URLSearchParams(new FormData(form));
+    fetch('https://docs.google.com/forms/d/e/1FAIpQLSc3hdB_IxX3wFBLahVYqQSeWvqlrnERiASxdolsJQjntCa4fw/formResponse', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: data
+    }).then(function() {
+      form.style.display = 'none';
+      document.getElementById('feedbackMsg').style.display = 'block';
+    }).catch(function() {
+      form.style.display = 'none';
+      document.getElementById('feedbackMsg').style.display = 'block';
+    });
+    return false;
+  }
+  </script>
 </body>
 </html>
