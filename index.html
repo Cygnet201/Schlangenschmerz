@@ -13,8 +13,8 @@
   </header>
 
   <nav class="tab-bar">
-    <a href="#modern" class="active">现代诗</a>
-    <a href="#classical">古体诗</a>
+    <a onclick="scrollToSection('modern')" class="active">现代诗</a>
+    <a onclick="scrollToSection('classical')">古体诗</a>
   </nav>
 
   <section id="modern">
@@ -225,5 +225,26 @@
       <a href="classical/37.html"><span class="title">少年</span><span class="date">2016.5.16</span></a>
     </div>
   </section>
+
+  <script>
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+  var tabs = document.querySelectorAll('.tab-bar a');
+  var sections = document.querySelectorAll('section[id]');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        tabs.forEach(function(a) { a.classList.remove('active'); });
+        tabs.forEach(function(a) {
+          if (a.getAttribute('onclick').indexOf(entry.target.id) !== -1) {
+            a.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-50% 0px -50% 0px' });
+  sections.forEach(function(s) { observer.observe(s); });
+  </script>
 </body>
 </html>
