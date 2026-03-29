@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" aria-label="切换主题"></button>
   <div class="poem-page">
     <a href="../index.html" class="back-link">返回目录</a>
     <div class="poem-header">
@@ -49,10 +50,10 @@
       <div class="feedback-msg" id="feedbackMsg">感谢你的评价！</div>
       <iframe name="gform-iframe" style="display:none;"></iframe>
     </div>
+    <div class="side-nav side-nav-left"><a href="62.html"><span class="arrow">‹</span>上一首</a></div>
+    <div class="side-nav side-nav-right"><a href="64.html"><span class="arrow">›</span>下一首</a></div>
     <nav class="poem-nav">
-      <a href="62.html">← 上一首</a>
-      <a href="../index.html">目录</a>
-      <a href="64.html">下一首 →</a>
+      <a href="../index.html">返回目录</a>
     </nav>
   </div>
   <script>
@@ -75,5 +76,40 @@
     return false;
   }
   </script>
+  <script>
+(function() {
+  var root = document.documentElement;
+  var btn = document.getElementById('themeBtn');
+  var saved = localStorage.getItem('theme');
+
+  function isDark() {
+    if (saved) return saved === 'dark';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  function apply() {
+    if (saved) {
+      root.setAttribute('data-theme', saved);
+    } else {
+      root.removeAttribute('data-theme');
+    }
+    btn.textContent = isDark() ? '\u2600' : '\u263D';
+  }
+
+  function toggleTheme() {
+    var dark = isDark();
+    saved = dark ? 'light' : 'dark';
+    localStorage.setItem('theme', saved);
+    apply();
+  }
+
+  window.toggleTheme = toggleTheme;
+  apply();
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+    if (!localStorage.getItem('theme')) apply();
+  });
+})();
+</script>
 </body>
 </html>

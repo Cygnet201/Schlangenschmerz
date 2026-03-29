@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" aria-label="切换主题"></button>
   <header class="index-header">
     <h1>折樱诗集</h1>
     <div class="subtitle">现代诗 160 首 · 古体诗 37 首</div>
@@ -246,5 +247,40 @@
   }, { rootMargin: '-50% 0px -50% 0px' });
   sections.forEach(function(s) { observer.observe(s); });
   </script>
+  <script>
+(function() {
+  var root = document.documentElement;
+  var btn = document.getElementById('themeBtn');
+  var saved = localStorage.getItem('theme');
+
+  function isDark() {
+    if (saved) return saved === 'dark';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  function apply() {
+    if (saved) {
+      root.setAttribute('data-theme', saved);
+    } else {
+      root.removeAttribute('data-theme');
+    }
+    btn.textContent = isDark() ? '\u2600' : '\u263D';
+  }
+
+  function toggleTheme() {
+    var dark = isDark();
+    saved = dark ? 'light' : 'dark';
+    localStorage.setItem('theme', saved);
+    apply();
+  }
+
+  window.toggleTheme = toggleTheme;
+  apply();
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+    if (!localStorage.getItem('theme')) apply();
+  });
+})();
+</script>
 </body>
 </html>
