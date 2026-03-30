@@ -318,6 +318,7 @@ body {
   color: var(--divider);
   cursor: pointer;
   transition: color 0.15s;
+  display: inline-block;
   overflow: hidden;
   line-height: 1;
 }
