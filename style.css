@@ -333,24 +333,6 @@ body {
   color: var(--accent);
 }
 
-.feedback-submit {
-  background: transparent;
-  color: var(--date);
-  border: 1px solid var(--divider);
-  border-radius: 4px;
-  padding: 0.5rem 2rem;
-  font-family: 'Noto Serif SC', serif;
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.feedback-submit:hover {
-  color: var(--text);
-  border-color: var(--accent);
-}
-
 .feedback-msg {
   color: var(--accent);
   font-size: 0.9rem;

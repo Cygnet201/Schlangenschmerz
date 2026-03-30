@@ -28,19 +28,14 @@
     <div class="feedback-section">
       <h3>留下你的评价</h3>
       <div class="rating-stats" id="ratingStats"></div>
-      <form id="feedbackForm" onsubmit="return submitFeedback(event)">
-        <input type="hidden" name="entry.133248077" value="出函谷">
-        <div class="rating-group">
-          <input type="radio" name="entry.1288177946" id="star5" value="5"><label for="star5"></label>
-          <input type="radio" name="entry.1288177946" id="star4" value="4"><label for="star4"></label>
-          <input type="radio" name="entry.1288177946" id="star3" value="3" checked><label for="star3"></label>
-          <input type="radio" name="entry.1288177946" id="star2" value="2"><label for="star2"></label>
-          <input type="radio" name="entry.1288177946" id="star1" value="1"><label for="star1"></label>
-        </div>
-        <button type="submit" class="feedback-submit">提交评分</button>
-      </form>
-      <div class="feedback-msg" id="feedbackMsg">感谢你的评价！</div>
-      <iframe name="gform-iframe" style="display:none;"></iframe>
+      <div class="rating-group" id="ratingGroup">
+        <input type="radio" name="rating" id="star5" value="5"><label for="star5"></label>
+        <input type="radio" name="rating" id="star4" value="4"><label for="star4"></label>
+        <input type="radio" name="rating" id="star3" value="3"><label for="star3"></label>
+        <input type="radio" name="rating" id="star2" value="2"><label for="star2"></label>
+        <input type="radio" name="rating" id="star1" value="1"><label for="star1"></label>
+      </div>
+      <div class="feedback-msg" id="feedbackMsg"></div>
     </div>
     <div class="comment-section">
       <h3>留下你的评论</h3>
@@ -53,41 +48,68 @@
     </nav>
   </div>
   <script>
-  function submitFeedback(e) {
-    e.preventDefault();
-    var form = document.getElementById('feedbackForm');
-    var data = new URLSearchParams(new FormData(form));
-    fetch('https://docs.google.com/forms/d/e/1FAIpQLSc3hdB_IxX3wFBLahVYqQSeWvqlrnERiASxdolsJQjntCa4fw/formResponse', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: data
-    }).then(function() {
-      form.style.display = 'none';
-      document.getElementById('feedbackMsg').style.display = 'block';
-    }).catch(function() {
-      form.style.display = 'none';
-      document.getElementById('feedbackMsg').style.display = 'block';
-    });
-    return false;
-  }
   (function() {
-    var poemTitle = '出函谷';
-    fetch('https://poetry201.netlify.app/.netlify/functions/ratings?poem=' + encodeURIComponent(poemTitle))
+    var RATING_API = 'https://poetry201.netlify.app/.netlify/functions/rating';
+    var poem = window.location.pathname;
+
+    function getWalineUser() {
+      try { return JSON.parse(localStorage.getItem('WALINE_USER')); }
+      catch(e) { return null; }
+    }
+
+    function renderStats(d) {
+      if (!d || d.count === 0) { document.getElementById('ratingStats').innerHTML = ''; return; }
+      var stars = '', full = Math.floor(d.avg), half = d.avg - full >= 0.5;
+      for (var i = 0; i < full; i++) stars += '★';
+      if (half) stars += '☆';
+      document.getElementById('ratingStats').innerHTML =
+        '<span class="stats-stars">' + stars + '</span> ' +
+        '<span class="stats-avg">' + d.avg + '</span>' +
+        '<span class="stats-count">' + d.count + ' 人评分</span>';
+    }
+
+    var user = getWalineUser();
+    var token = user ? user.token : null;
+    var fetchHeaders = {};
+    if (token) fetchHeaders['Authorization'] = 'Bearer ' + token;
+
+    fetch(RATING_API + '?poem=' + encodeURIComponent(poem), { headers: fetchHeaders })
       .then(function(r) { return r.json(); })
       .then(function(d) {
-        if (d && d.count > 0) {
-          var stars = '';
-          var full = Math.floor(d.avg);
-          var half = d.avg - full >= 0.5;
-          for (var i = 0; i < full; i++) stars += '★';
-          if (half) stars += '☆';
-          document.getElementById('ratingStats').innerHTML =
-            '<span class="stats-stars">' + stars + '</span> ' +
-            '<span class="stats-avg">' + d.avg + '</span>' +
-            '<span class="stats-count">' + d.count + ' 人评分</span>';
+        renderStats(d);
+        if (d.userScore) {
+          var el = document.getElementById('star' + d.userScore);
+          if (el) el.checked = true;
         }
       }).catch(function() {});
+
+    if (!token) {
+      document.getElementById('feedbackMsg').innerHTML = '请先在下方评论区登录后评分';
+      document.getElementById('feedbackMsg').style.display = 'block';
+      var inputs = document.querySelectorAll('#ratingGroup input');
+      for (var i = 0; i < inputs.length; i++) inputs[i].disabled = true;
+      return;
+    }
+
+    var radios = document.querySelectorAll('#ratingGroup input[name="rating"]');
+    for (var j = 0; j < radios.length; j++) {
+      radios[j].addEventListener('change', function() {
+        var score = parseInt(this.value);
+        fetch(RATING_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ poem: poem, score: score })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          renderStats(d);
+          var msg = document.getElementById('feedbackMsg');
+          msg.textContent = '评分已保存';
+          msg.style.display = 'block';
+          setTimeout(function() { msg.style.display = 'none'; }, 2000);
+        });
+      });
+    }
   })();
   </script>
   <script>
