@@ -54,6 +54,7 @@
     </div>
     <div class="feedback-section">
       <h3>留下你的评价</h3>
+      <div class="rating-stats" id="ratingStats"></div>
       <form id="feedbackForm" onsubmit="return submitFeedback(event)">
         <input type="hidden" name="entry.133248077" value="在我面前的这条河">
         <div class="rating-group">
@@ -97,6 +98,24 @@
     });
     return false;
   }
+  (function() {
+    var poemTitle = '在我面前的这条河';
+    fetch('https://poetry201.netlify.app/.netlify/functions/ratings?poem=' + encodeURIComponent(poemTitle))
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d && d.count > 0) {
+          var stars = '';
+          var full = Math.floor(d.avg);
+          var half = d.avg - full >= 0.5;
+          for (var i = 0; i < full; i++) stars += '★';
+          if (half) stars += '☆';
+          document.getElementById('ratingStats').innerHTML =
+            '<span class="stats-stars">' + stars + '</span> ' +
+            '<span class="stats-avg">' + d.avg + '</span>' +
+            '<span class="stats-count">' + d.count + ' 人评分</span>';
+        }
+      }).catch(function() {});
+  })();
   </script>
   <script>
 (function() {

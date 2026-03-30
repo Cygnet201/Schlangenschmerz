@@ -358,6 +358,31 @@ body {
   display: none;
 }
 
+/* ===== Rating stats ===== */
+
+.rating-stats {
+  color: var(--date);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  min-height: 1.4em;
+}
+
+.rating-stats .stats-stars {
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  margin-right: 0.3em;
+}
+
+.rating-stats .stats-avg {
+  font-size: 1.1rem;
+  color: var(--text);
+  margin-right: 0.5em;
+}
+
+.rating-stats .stats-count {
+  color: var(--date);
+}
+
 /* ===== Comment (Waline) ===== */
 
 .comment-section {
