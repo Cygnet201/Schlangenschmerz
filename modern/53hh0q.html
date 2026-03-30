@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>九歌·二 - 折樱诗集</title>
+  <script>(function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s)})()</script>
+  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" aria-label="切换主题"></button>
+  <div class="poem-page">
+    <a href="../index.html" class="back-link">返回目录</a>
+    <div class="poem-header">
+      <h1>九歌·二</h1>
+      <div class="date">2025.5.4</div>
+    </div>
+    <div class="poem-body">
+      <div class="stanza">
+        一面镜子中倒映着无数模糊不清的形象<br>
+        有个声音切开朦胧说<br>
+        这就是你<br>
+        眼前顿时明白起来
+      </div>
+
+      <div class="stanza">
+        我在词与句的锁链上跳舞<br>
+        迎来盛大的狂喜<br>
+        你于黑暗的夜中悄然逝去<br>
+        期待一场永无可能的葬礼
+      </div>
+
+      <div class="stanza">
+        留下来的空洞<br>
+        是一个好了又开裂的疮疤<br>
+        温暖的光<br>
+        也渐渐冰凉
+      </div>
+
+      <div class="stanza">
+        来吧<br>
+        到血流不止的悬崖上俯瞰<br>
+        这里的风景熟悉吗？<br>
+        鸟儿像疯子一样追尾盘旋
+      </div>
+
+      <div class="stanza">
+        硬化的痛苦沉积成了一座休眠火山<br>
+        它也许喷发过<br>
+        此时四周已变换沧海<br>
+        静静地，慢慢地……<br>
+        暴雨落下疾风吹拂<br>
+        没有谁会记得
+      </div>
+    </div>
+    <div class="feedback-section">
+      <h3>留下你的评价</h3>
+      <div class="rating-stats" id="ratingStats"></div>
+      <div class="rating-group" id="ratingGroup">
+        <input type="radio" name="rating" id="star5" value="5"><label for="star5"></label>
+        <input type="radio" name="rating" id="star4" value="4"><label for="star4"></label>
+        <input type="radio" name="rating" id="star3" value="3"><label for="star3"></label>
+        <input type="radio" name="rating" id="star2" value="2"><label for="star2"></label>
+        <input type="radio" name="rating" id="star1" value="1"><label for="star1"></label>
+      </div>
+      <div class="feedback-msg" id="feedbackMsg"></div>
+    </div>
+    <div class="comment-section">
+      <h3>留下你的评论</h3>
+      <div id="waline"></div>
+    </div>
+    <div class="side-nav side-nav-left"><a href="tp2evr.html"><span class="arrow">‹</span>上一首</a></div>
+    <div class="side-nav side-nav-right"><a href="48110s.html"><span class="arrow">›</span>下一首</a></div>
+    <nav class="poem-nav">
+      <a href="../index.html">返回目录</a>
+    </nav>
+  </div>
+  <script>
+  (function() {
+    var RATING_API = 'https://poetry201.netlify.app/.netlify/functions/rating';
+    var poem = window.location.pathname;
+
+    function getWalineUser() {
+      try { return JSON.parse(localStorage.getItem('WALINE_USER')); }
+      catch(e) { return null; }
+    }
+
+    function renderStats(d) {
+      if (!d || d.count === 0) { document.getElementById('ratingStats').innerHTML = ''; return; }
+      var stars = '', full = Math.floor(d.avg), half = d.avg - full >= 0.5;
+      for (var i = 0; i < full; i++) stars += '★';
+      if (half) stars += '☆';
+      document.getElementById('ratingStats').innerHTML =
+        '<span class="stats-stars">' + stars + '</span> ' +
+        '<span class="stats-avg">' + d.avg + '</span>' +
+        '<span class="stats-count">' + d.count + ' 人评分</span>';
+    }
+
+    var user = getWalineUser();
+    var token = user ? user.token : null;
+    var fetchHeaders = {};
+    if (token) fetchHeaders['Authorization'] = 'Bearer ' + token;
+
+    fetch(RATING_API + '?poem=' + encodeURIComponent(poem), { headers: fetchHeaders })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        renderStats(d);
+        if (d.userScore) {
+          var el = document.getElementById('star' + d.userScore);
+          if (el) el.checked = true;
+        }
+      }).catch(function() {});
+
+    if (!token) {
+      document.getElementById('feedbackMsg').innerHTML = '请先在下方评论区登录后评分';
+      document.getElementById('feedbackMsg').style.display = 'block';
+      var inputs = document.querySelectorAll('#ratingGroup input');
+      for (var i = 0; i < inputs.length; i++) inputs[i].disabled = true;
+      return;
+    }
+
+    var radios = document.querySelectorAll('#ratingGroup input[name="rating"]');
+    for (var j = 0; j < radios.length; j++) {
+      radios[j].addEventListener('change', function() {
+        var score = parseInt(this.value);
+        fetch(RATING_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ poem: poem, score: score })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          renderStats(d);
+          var msg = document.getElementById('feedbackMsg');
+          msg.textContent = '评分已保存';
+          msg.style.display = 'block';
+          setTimeout(function() { msg.style.display = 'none'; }, 2000);
+        });
+      });
+    }
+  })();
+  </script>
+  <script>
+(function() {
+  var root = document.documentElement;
+  var btn = document.getElementById('themeBtn');
+  var saved = localStorage.getItem('theme');
+
+  function isDark() {
+    if (saved) return saved === 'dark';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  function apply() {
+    if (saved) {
+      root.setAttribute('data-theme', saved);
+    } else {
+      root.removeAttribute('data-theme');
+    }
+    btn.textContent = isDark() ? '\u2600' : '\u263D';
+  }
+
+  function toggleTheme() {
+    var dark = isDark();
+    saved = dark ? 'light' : 'dark';
+    localStorage.setItem('theme', saved);
+    apply();
+  }
+
+  window.toggleTheme = toggleTheme;
+  apply();
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+    if (!localStorage.getItem('theme')) apply();
+  });
+})();
+</script>
+  <script type="module">
+    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+    init({
+      el: '#waline',
+      serverURL: 'https://poetry201.netlify.app/.netlify/functions/comment',
+      path: window.location.pathname,
+      lang: 'zh-CN',
+      requiredMeta: ['nick'],
+      placeholder: '写下你的感想…',
+    });
+  </script>
+</body>
+</html>

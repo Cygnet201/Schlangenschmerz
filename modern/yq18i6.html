@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>愤怒 - 折樱诗集</title>
+  <script>(function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s)})()</script>
+  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" aria-label="切换主题"></button>
+  <div class="poem-page">
+    <a href="../index.html" class="back-link">返回目录</a>
+    <div class="poem-header">
+      <h1>愤怒</h1>
+      <div class="date">2017.5.10</div>
+    </div>
+    <div class="poem-body">
+      <div class="stanza">
+        我幽静的庭院里座无虚席<br>
+        我空寂的田野里十日谈心<br>
+        我在我的逼仄小屋里诅咒<br>
+        诅咒他们死后被扬灰挫骨<br>
+        牛羊悲鸣怀念从前和过去<br>
+        杜鹃啼血哀叹现在与今夕<br>
+        现在、过去、未来全在外面<br>
+        像纷至沓来的贵客<br>
+        似令行禁止的兵卒<br>
+        一步一步咏叹<br>
+        令我遍体生寒<br>
+        敲门声响起——死神在召集信徒<br>
+        先前热闹的人们蜂拥而至<br>
+        他们过来了，他们过来了！<br>
+        我恨不得转身就逃走<br>
+        再不当“巴士底狱狱卒”<br>
+        ——虚空向我涌来<br>
+        我在逼仄的永恒中挣扎<br>
+        仰望早已隐没的星辰<br>
+        狠踩默不作声的大地<br>
+        眼泪向我的血液流去<br>
+        我的盐滋润了我的荆棘<br>
+        恸哭变成可笑的干呕<br>
+        他们都看见了<br>
+        他们还看到我两眼翻白的蠢样<br>
+        我看见他们在欢呼<br>
+        我还看见他们欢呼中的全然麻木<br>
+        他们不见我的灵魂<br>
+        我也不见他们的皮相<br>
+        死神的镰刀静谧极了<br>
+        我握住了它<br>
+        像是告别一场盛大演出
+      </div>
+    </div>
+    <div class="feedback-section">
+      <h3>留下你的评价</h3>
+      <div class="rating-stats" id="ratingStats"></div>
+      <div class="rating-group" id="ratingGroup">
+        <input type="radio" name="rating" id="star5" value="5"><label for="star5"></label>
+        <input type="radio" name="rating" id="star4" value="4"><label for="star4"></label>
+        <input type="radio" name="rating" id="star3" value="3"><label for="star3"></label>
+        <input type="radio" name="rating" id="star2" value="2"><label for="star2"></label>
+        <input type="radio" name="rating" id="star1" value="1"><label for="star1"></label>
+      </div>
+      <div class="feedback-msg" id="feedbackMsg"></div>
+    </div>
+    <div class="comment-section">
+      <h3>留下你的评论</h3>
+      <div id="waline"></div>
+    </div>
+    <div class="side-nav side-nav-left"><a href="9u0nao.html"><span class="arrow">‹</span>上一首</a></div>
+    <div class="side-nav side-nav-right"><a href="wjn8i8.html"><span class="arrow">›</span>下一首</a></div>
+    <nav class="poem-nav">
+      <a href="../index.html">返回目录</a>
+    </nav>
+  </div>
+  <script>
+  (function() {
+    var RATING_API = 'https://poetry201.netlify.app/.netlify/functions/rating';
+    var poem = window.location.pathname;
+
+    function getWalineUser() {
+      try { return JSON.parse(localStorage.getItem('WALINE_USER')); }
+      catch(e) { return null; }
+    }
+
+    function renderStats(d) {
+      if (!d || d.count === 0) { document.getElementById('ratingStats').innerHTML = ''; return; }
+      var stars = '', full = Math.floor(d.avg), half = d.avg - full >= 0.5;
+      for (var i = 0; i < full; i++) stars += '★';
+      if (half) stars += '☆';
+      document.getElementById('ratingStats').innerHTML =
+        '<span class="stats-stars">' + stars + '</span> ' +
+        '<span class="stats-avg">' + d.avg + '</span>' +
+        '<span class="stats-count">' + d.count + ' 人评分</span>';
+    }
+
+    var user = getWalineUser();
+    var token = user ? user.token : null;
+    var fetchHeaders = {};
+    if (token) fetchHeaders['Authorization'] = 'Bearer ' + token;
+
+    fetch(RATING_API + '?poem=' + encodeURIComponent(poem), { headers: fetchHeaders })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        renderStats(d);
+        if (d.userScore) {
+          var el = document.getElementById('star' + d.userScore);
+          if (el) el.checked = true;
+        }
+      }).catch(function() {});
+
+    if (!token) {
+      document.getElementById('feedbackMsg').innerHTML = '请先在下方评论区登录后评分';
+      document.getElementById('feedbackMsg').style.display = 'block';
+      var inputs = document.querySelectorAll('#ratingGroup input');
+      for (var i = 0; i < inputs.length; i++) inputs[i].disabled = true;
+      return;
+    }
+
+    var radios = document.querySelectorAll('#ratingGroup input[name="rating"]');
+    for (var j = 0; j < radios.length; j++) {
+      radios[j].addEventListener('change', function() {
+        var score = parseInt(this.value);
+        fetch(RATING_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ poem: poem, score: score })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          renderStats(d);
+          var msg = document.getElementById('feedbackMsg');
+          msg.textContent = '评分已保存';
+          msg.style.display = 'block';
+          setTimeout(function() { msg.style.display = 'none'; }, 2000);
+        });
+      });
+    }
+  })();
+  </script>
+  <script>
+(function() {
+  var root = document.documentElement;
+  var btn = document.getElementById('themeBtn');
+  var saved = localStorage.getItem('theme');
+
+  function isDark() {
+    if (saved) return saved === 'dark';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  function apply() {
+    if (saved) {
+      root.setAttribute('data-theme', saved);
+    } else {
+      root.removeAttribute('data-theme');
+    }
+    btn.textContent = isDark() ? '\u2600' : '\u263D';
+  }
+
+  function toggleTheme() {
+    var dark = isDark();
+    saved = dark ? 'light' : 'dark';
+    localStorage.setItem('theme', saved);
+    apply();
+  }
+
+  window.toggleTheme = toggleTheme;
+  apply();
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+    if (!localStorage.getItem('theme')) apply();
+  });
+})();
+</script>
+  <script type="module">
+    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+    init({
+      el: '#waline',
+      serverURL: 'https://poetry201.netlify.app/.netlify/functions/comment',
+      path: window.location.pathname,
+      lang: 'zh-CN',
+      requiredMeta: ['nick'],
+      placeholder: '写下你的感想…',
+    });
+  </script>
+</body>
+</html>
