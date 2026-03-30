@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>湖 - 折樱诗集</title>
+  <title>思 - 折樱诗集</title>
   <script>(function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s)})()</script>
   <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
   <link rel="stylesheet" href="../style.css">
@@ -14,36 +14,47 @@
   <div class="poem-page">
     <a href="../index.html" class="back-link">返回目录</a>
     <div class="poem-header">
-      <h1>湖</h1>
+      <h1>思</h1>
       <div class="date">2016.12.11</div>
     </div>
     <div class="poem-body">
       <div class="stanza">
-        我的寂寞是天上的湖泊，<br>
-        沉默着辽阔。<br>
-        越是狂风紧贴在面上时，<br>
-        越使它澄澈。
+        游子的船，<br>
+        总要泊于港湾。
       </div>
 
       <div class="stanza">
-        它澄澈，<br>
-        海潮倒映着它的蓝色。<br>
-        层层云浪，<br>
-        是它无处安定的寄托。
+        北国雪，江南雨，<br>
+        无一可暖。<br>
+        见惯了黎明海色，<br>
+        也将琵琶反弹：<br>
+        不归，不归，<br>
+        莫问几更还。
       </div>
 
       <div class="stanza">
-        还好它，<br>
-        不至于太孤独。<br>
-        因为昨日的它，<br>
-        已经沉沉睡下。
+        隐约钟声，<br>
+        问起游子的答案：<br>
+        荒芜一切之后，<br>
+        才有如画这般。
+      </div>
+
+      <div class="stanza">
+        风信子，蝴蝶兰，<br>
+        梦去长夏花满。<br>
+        徘徊夜里，<br>
+        暴雨初晴，<br>
+        不是归程胜归程：<br>
+        再扬风帆。<br>
+        出走的游子，<br>
+        最想念港湾。
       </div>
     </div>
     <div class="feedback-section">
       <h3>留下你的评价</h3>
       <div class="rating-stats" id="ratingStats"></div>
       <form id="feedbackForm" onsubmit="return submitFeedback(event)">
-        <input type="hidden" name="entry.133248077" value="湖">
+        <input type="hidden" name="entry.133248077" value="思">
         <div class="rating-group">
           <input type="radio" name="entry.1288177946" id="star5" value="5"><label for="star5"></label>
           <input type="radio" name="entry.1288177946" id="star4" value="4"><label for="star4"></label>
@@ -86,7 +97,7 @@
     return false;
   }
   (function() {
-    var poemTitle = '湖';
+    var poemTitle = '思';
     fetch('https://poetry201.netlify.app/.netlify/functions/ratings?poem=' + encodeURIComponent(poemTitle))
       .then(function(r) { return r.json(); })
       .then(function(d) {

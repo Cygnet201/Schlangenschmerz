@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>梦 - 折樱诗集</title>
+  <title>某刻 - 折樱诗集</title>
   <script>(function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s)})()</script>
   <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
   <link rel="stylesheet" href="../style.css">
@@ -14,42 +14,50 @@
   <div class="poem-page">
     <a href="../index.html" class="back-link">返回目录</a>
     <div class="poem-header">
-      <h1>梦</h1>
+      <h1>某刻</h1>
       <div class="date">2016.12.11</div>
     </div>
     <div class="poem-body">
       <div class="stanza">
-        少年以为脚下的大地，<br>
-        最初到最后都稳固。
+        梦里的小时候<br>
+        曾多少次成为英雄<br>
+        特意勾起嘴角<br>
+        无数高墙嘲讽
       </div>
 
       <div class="stanza">
-        他却做了个可怕的梦：<br>
-        地球失去了心，<br>
-        水泥为它葬礼。<br>
-        地球被裹成木乃伊，<br>
-        大地从此缺席。
+        片刻烟消<br>
+        彼处已是不归尘的楼<br>
+        此梦无数<br>
+        次次如故
       </div>
 
       <div class="stanza">
-        谁都没有注意到，<br>
-        地球轨道的偏移。<br>
-        天文学家们，<br>
-        也绝口不提。
+        渐渐迷蒙<br>
+        变得像梦<br>
+        主角换成了<br>
+        英雄的影子
       </div>
 
       <div class="stanza">
-        所以末日，<br>
-        如斯美好：<br>
-        少年走在公路上，<br>
-        世界从此静寂。
+        注视着照旧笔直<br>
+        盛夏午后的脊梁<br>
+        又是无数<br>
+        次次如故
+      </div>
+
+      <div class="stanza">
+        亦步亦趋<br>
+        做他背影<br>
+        吻过无垠的水泥后<br>
+        他留我于梦中
       </div>
     </div>
     <div class="feedback-section">
       <h3>留下你的评价</h3>
       <div class="rating-stats" id="ratingStats"></div>
       <form id="feedbackForm" onsubmit="return submitFeedback(event)">
-        <input type="hidden" name="entry.133248077" value="梦">
+        <input type="hidden" name="entry.133248077" value="某刻">
         <div class="rating-group">
           <input type="radio" name="entry.1288177946" id="star5" value="5"><label for="star5"></label>
           <input type="radio" name="entry.1288177946" id="star4" value="4"><label for="star4"></label>
@@ -92,7 +100,7 @@
     return false;
   }
   (function() {
-    var poemTitle = '梦';
+    var poemTitle = '某刻';
     fetch('https://poetry201.netlify.app/.netlify/functions/ratings?poem=' + encodeURIComponent(poemTitle))
       .then(function(r) { return r.json(); })
       .then(function(d) {
