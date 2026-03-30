@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>走廊小酌——致摆渡人 - 折樱诗集</title>
   <script>(function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s)})()</script>
+  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -46,11 +47,14 @@
           <input type="radio" name="entry.1288177946" id="star2" value="2"><label for="star2"></label>
           <input type="radio" name="entry.1288177946" id="star1" value="1"><label for="star1"></label>
         </div>
-        <textarea class="feedback-textarea" name="entry.769828955" placeholder="有什么想说的？（选填）"></textarea>
-        <button type="submit" class="feedback-submit">提交</button>
+        <button type="submit" class="feedback-submit">提交评分</button>
       </form>
       <div class="feedback-msg" id="feedbackMsg">感谢你的评价！</div>
       <iframe name="gform-iframe" style="display:none;"></iframe>
+    </div>
+    <div class="comment-section">
+      <h3>留下你的评论</h3>
+      <div id="waline"></div>
     </div>
     <div class="side-nav side-nav-left"><a href="100.html"><span class="arrow">‹</span>上一首</a></div>
     <div class="side-nav side-nav-right"><a href="102.html"><span class="arrow">›</span>下一首</a></div>
@@ -113,5 +117,16 @@
   });
 })();
 </script>
+  <script type="module">
+    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+    init({
+      el: '#waline',
+      serverURL: 'https://poetry201.netlify.app/.netlify/functions/comment',
+      path: window.location.pathname,
+      lang: 'zh-CN',
+      requiredMeta: ['nick'],
+      placeholder: '写下你的感想…',
+    });
+  </script>
 </body>
 </html>

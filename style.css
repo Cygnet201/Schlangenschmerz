@@ -6,6 +6,9 @@
   --date: #9A918A;
   --divider: #D6CEC6;
   --accent: #B8A99A;
+  --waline-font: 'Noto Serif SC', 'Source Han Serif SC', serif;
+  --waline-theme-color: #B8A99A;
+  --waline-active-color: #B8A99A;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,6 +18,14 @@
     --date: #7A7168;
     --divider: #332E2A;
     --accent: #C4B5A6;
+    --waline-bg-color: #2a2213;
+    --waline-bg-color-light: #332E2A;
+    --waline-bg-color-hover: #3a3325;
+    --waline-color: #E0D8D0;
+    --waline-border-color: #332E2A;
+    --waline-disable-color: #7A7168;
+    --waline-info-color: #7A7168;
+    --waline-active-color: #C4B5A6;
   }
 }
 
@@ -24,6 +35,14 @@
   --date: #7A7168;
   --divider: #332E2A;
   --accent: #C4B5A6;
+  --waline-bg-color: #2a2213;
+  --waline-bg-color-light: #332E2A;
+  --waline-bg-color-hover: #3a3325;
+  --waline-color: #E0D8D0;
+  --waline-border-color: #332E2A;
+  --waline-disable-color: #7A7168;
+  --waline-info-color: #7A7168;
+  --waline-active-color: #C4B5A6;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -314,32 +333,6 @@ body {
   color: var(--accent);
 }
 
-.feedback-textarea {
-  width: 100%;
-  max-width: 420px;
-  min-height: 80px;
-  padding: 0.8rem;
-  margin: 0 auto 1rem;
-  display: block;
-  border: 1px solid var(--divider);
-  border-radius: 4px;
-  background: transparent;
-  color: var(--text);
-  font-family: 'Noto Serif SC', serif;
-  font-size: 0.9rem;
-  line-height: 1.6;
-  resize: vertical;
-}
-
-.feedback-textarea:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-
-.feedback-textarea::placeholder {
-  color: var(--date);
-}
-
 .feedback-submit {
   background: transparent;
   color: var(--date);
@@ -364,6 +357,26 @@ body {
   margin-top: 0.8rem;
   display: none;
 }
+
+/* ===== Comment (Waline) ===== */
+
+.comment-section {
+  border-top: 1px solid var(--divider);
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  text-align: center;
+}
+
+.comment-section h3 {
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-weight: normal;
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  color: var(--date);
+  margin-bottom: 1.2rem;
+}
+
+#waline .wl-rss { display: none; }
 
 /* ===== Responsive ===== */
 
