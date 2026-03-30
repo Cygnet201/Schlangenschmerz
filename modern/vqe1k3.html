@@ -69,11 +69,16 @@
       <h3>留下你的评价</h3>
       <div class="rating-stats" id="ratingStats"></div>
       <div class="rating-group" id="ratingGroup">
-        <input type="radio" name="rating" id="star5" value="5"><label for="star5"></label>
-        <input type="radio" name="rating" id="star4" value="4"><label for="star4"></label>
-        <input type="radio" name="rating" id="star3" value="3"><label for="star3"></label>
-        <input type="radio" name="rating" id="star2" value="2"><label for="star2"></label>
-        <input type="radio" name="rating" id="star1" value="1"><label for="star1"></label>
+        <input type="radio" name="rating" id="s10" value="10"><label for="s10" class="full"></label>
+        <input type="radio" name="rating" id="s9"  value="9"><label for="s9"  class="half"></label>
+        <input type="radio" name="rating" id="s8"  value="8"><label for="s8"  class="full"></label>
+        <input type="radio" name="rating" id="s7"  value="7"><label for="s7"  class="half"></label>
+        <input type="radio" name="rating" id="s6"  value="6"><label for="s6"  class="full"></label>
+        <input type="radio" name="rating" id="s5"  value="5"><label for="s5"  class="half"></label>
+        <input type="radio" name="rating" id="s4"  value="4"><label for="s4"  class="full"></label>
+        <input type="radio" name="rating" id="s3"  value="3"><label for="s3"  class="half"></label>
+        <input type="radio" name="rating" id="s2"  value="2"><label for="s2"  class="full"></label>
+        <input type="radio" name="rating" id="s1"  value="1"><label for="s1"  class="half"></label>
       </div>
       <div class="feedback-msg" id="feedbackMsg"></div>
     </div>
@@ -99,7 +104,7 @@
 
     function renderStats(d) {
       if (!d || d.count === 0) { document.getElementById('ratingStats').innerHTML = ''; return; }
-      var stars = '', full = Math.floor(d.avg), half = d.avg - full >= 0.5;
+      var v = d.avg / 2, stars = '', full = Math.floor(v), half = v - full >= 0.25;
       for (var i = 0; i < full; i++) stars += '★';
       if (half) stars += '☆';
       document.getElementById('ratingStats').innerHTML =
@@ -118,7 +123,7 @@
       .then(function(d) {
         renderStats(d);
         if (d.userScore) {
-          var el = document.getElementById('star' + d.userScore);
+          var el = document.getElementById('s' + d.userScore);
           if (el) el.checked = true;
         }
       }).catch(function() {});

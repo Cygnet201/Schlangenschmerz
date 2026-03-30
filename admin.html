@@ -63,7 +63,7 @@
   }
 
   function starsHtml(n) {
-    var s = '', full = Math.floor(n), half = n - full >= 0.5;
+    var v = n / 2, s = '', full = Math.floor(v), half = v - full >= 0.25;
     for (var i = 0; i < full; i++) s += '&#9733;';
     if (half) s += '&#9734;';
     return s;

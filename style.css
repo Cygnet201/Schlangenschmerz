@@ -305,11 +305,10 @@ body {
 }
 
 .rating-group {
-  display: flex;
+  display: inline-flex;
+  flex-direction: row-reverse;
   justify-content: center;
-  gap: 0.5rem;
   margin-bottom: 1.2rem;
-  direction: rtl;
 }
 
 .rating-group input { display: none; }
@@ -319,19 +318,32 @@ body {
   color: var(--divider);
   cursor: pointer;
   transition: color 0.15s;
+  overflow: hidden;
+  line-height: 1;
 }
 
-.rating-group label::before { content: '★'; }
-
-.rating-group input:checked ~ label,
-.rating-group input:checked + label {
-  color: var(--accent);
+.rating-group label::before {
+  content: '★';
+  display: inline-block;
 }
+
+.rating-group label.half {
+  width: 0.5em;
+  margin-left: 0.1em;
+}
+
+.rating-group label.full {
+  width: 0.5em;
+}
+
+.rating-group label.full::before {
+  margin-left: -0.5em;
+}
+
+.rating-group input:checked ~ label { color: var(--accent); }
 
 .rating-group label:hover,
-.rating-group label:hover ~ label {
-  color: var(--accent);
-}
+.rating-group label:hover ~ label { color: var(--accent); }
 
 .feedback-msg {
   color: var(--accent);
